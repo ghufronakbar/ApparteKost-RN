@@ -27,6 +27,7 @@ export default function Layout() {
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
         <Stack.Screen name="list-cost" options={{ headerShown: false }} />
+        <Stack.Screen name="ar-view" options={{ headerShown: false }} />
         <Stack.Screen
           name="profile"
           options={{

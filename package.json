@@ -20,8 +20,10 @@
     "@react-navigation/native": "^6.0.2",
     "axios": "^1.7.7",
     "axios-cache-interceptor": "^1.6.0",
+    "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.10",
+    "expo-gl": "~14.0.2",
     "expo-image-manipulator": "^12.0.5",
     "expo-image-picker": "^15.0.7",
     "expo-linking": "~6.3.1",
@@ -30,7 +32,9 @@
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
+    "expo-three": "^8.0.0",
     "expo-web-browser": "~13.0.3",
+    "install": "^0.13.0",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -43,7 +47,8 @@
     "react-native-screens": "3.31.1",
     "react-native-toast-message": "^2.2.1",
     "react-native-web": "~0.19.10",
-    "expo": "~51.0.28"
+    "react-native-webview": "13.8.6",
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

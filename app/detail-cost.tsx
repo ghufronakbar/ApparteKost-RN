@@ -17,8 +17,17 @@ import {
 } from "react-native";
 
 const DetailCostScreen = () => {
-  const handleClick = () => {
+  const messageClick = () => {
     Alert.alert("Coming Soon");
+  };
+  const saveClick = () => {
+    Alert.alert("Coming Soon");
+  };
+  const mapClick = () => {
+    Alert.alert("Coming Soon");
+  };
+  const arViewClick = () => {
+    router.push("/ar-view");
   };
 
   return (
@@ -85,7 +94,7 @@ const DetailCostScreen = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={handleClick}
+              onPress={messageClick}
             >
               <Ionicons name="chatbox-ellipses" size={24} color="white" />
             </TouchableOpacity>
@@ -98,6 +107,7 @@ const DetailCostScreen = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onPress={saveClick}
             >
               <Ionicons name="bookmark-outline" size={24} color="white" />
             </TouchableOpacity>
@@ -110,6 +120,7 @@ const DetailCostScreen = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onPress={mapClick}
             >
               <Ionicons name="earth" size={24} color="white" />
             </TouchableOpacity>
@@ -122,6 +133,7 @@ const DetailCostScreen = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onPress={arViewClick}
             >
               <MaterialIcons name="360" size={24} color="white" />
             </TouchableOpacity>
