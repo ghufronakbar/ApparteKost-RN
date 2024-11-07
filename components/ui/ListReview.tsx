@@ -9,6 +9,7 @@ interface Props {
   rating: number;
   comment: string | null;
   isFull?: boolean;
+  isDeletable?: boolean;
 }
 
 const ListReview = ({
@@ -17,6 +18,7 @@ const ListReview = ({
   rating,
   comment,
   isFull = false,
+  isDeletable
 }: Props) => {
   return (
     <View
@@ -59,9 +61,14 @@ const ListReview = ({
             </ThemedText>
           </View>
         </View>
-        <View className="flex flex-row space-x-1 justify-end">
-          <Ionicons name="star" size={16} color="#fa9006" />
-          <ThemedText type="defaultSemiBold">{rating.toFixed(1)}</ThemedText>
+        <View className="flex flex-col items-end space-y-1">
+          <View className="flex flex-row space-x-1 justify-end">
+            <Ionicons name="star" size={16} color="#fa9006" />
+            <ThemedText type="defaultSemiBold">{rating.toFixed(1)}</ThemedText>
+          </View>
+          {isFull && isDeletable && (
+            <Ionicons name="backspace-sharp" size={16} color="red" />
+          )}
         </View>
       </View>
       <ThemedText type="default">{comment}</ThemedText>

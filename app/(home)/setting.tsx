@@ -88,12 +88,6 @@ const LIST_MENU: ListMenuProps[] = [
     href: "/profile",
   },
   {
-    icon: <Ionicons name="notifications-outline" size={24} color={"#6d45a1"} />,
-    name: "Notifikasi",
-    color: "#d4c3ed",
-    href: "/notification",
-  },
-  {
     icon: <Ionicons name="lock-closed-outline" size={24} color={"#404fb1"} />,
     name: "Privasi",
     color: "#c4caec",

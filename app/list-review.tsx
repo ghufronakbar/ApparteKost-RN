@@ -1,17 +1,7 @@
-import { DEFAULT_IMAGE, DEFAULT_PROFILE } from "@/assets";
 import { ThemedText } from "@/components/ThemedText";
 import ListReview from "@/components/ui/ListReview";
-import { C } from "@/constants/Colors";
-import { MaterialIcons } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { FlatList, View } from "react-native";
 
 const ListReviewScreen = () => {
   return (
@@ -28,6 +18,7 @@ const ListReviewScreen = () => {
           backgroundColor: "white",
           overflow: "hidden",
           gap: 24,
+          flex: 1,
         }}
       >
         <View className="space-y-4">
@@ -48,13 +39,13 @@ const ListReviewScreen = () => {
                 rating={item.rating}
                 image={item.image}
                 isFull
+                isDeletable={item.isDeletable}
               />
             )}
             keyExtractor={(item) => item.name}
-            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 40, paddingTop: 2 }}
           />
         </View>
-        <View className="h-40" />
       </View>
     </View>
   );
@@ -62,51 +53,68 @@ const ListReviewScreen = () => {
 
 const LIST_REVIEWS = [
   {
-    name: "Asep",
-    image: "https://via.placeholder.com/150",
-    rating: 4.5,
-    comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-  {
-    name: "Budi",
-    rating: 4.0,
-    comment: "Pellentesque habitant morbi tristique senectus et netus.",
-  },
-  {
-    name: "Citra",
-    image: "https://via.placeholder.com/150",
-    rating: 3.8,
-    comment: "Vivamus suscipit tortor eget felis porttitor volutpat.",
-  },
-  {
-    name: "Dewi",
-    rating: 4.2,
+    name: "Abi Pamungkas",
+    rating: 4,
     comment:
-      "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
-  },
-  {
-    name: "Citra",
+      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
     image: "https://via.placeholder.com/150",
-    rating: 3.8,
-    comment: "Vivamus suscipit tortor eget felis porttitor volutpat.",
+    isDeletable: true,
   },
   {
-    name: "Dewi",
-    rating: 4.2,
+    name: "Rina",
+    rating: 4,
     comment:
-      "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
+      "Tempat yang tenang untuk belajar dan istirahat. Harga sesuai dengan fasilitas.",
   },
   {
-    name: "Citra",
+    name: "Dika",
+    rating: 4,
+    comment: "Kamar luas dan bersih, namun sinyal WiFi terkadang lambat.",
     image: "https://via.placeholder.com/150",
-    rating: 3.8,
-    comment: "Vivamus suscipit tortor eget felis porttitor volutpat.",
   },
   {
-    name: "Dewi",
-    rating: 4.2,
+    name: "Maya",
+    rating: 5,
     comment:
-      "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
+      "Sangat puas dengan kos ini! Lingkungan aman dan nyaman, serta dekat dengan kampus.",
+  },
+  {
+    name: "Yudi",
+    rating: 3,
+    comment: "Kos lumayan, namun fasilitas dapurnya perlu diperbarui.",
+  },
+  {
+    name: "Santi",
+    rating: 4,
+    comment:
+      "Kebersihan terjaga dengan baik dan terdapat parkir motor yang luas.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Rico",
+    rating: 4,
+    comment:
+      "Harga cukup terjangkau dengan fasilitas AC dan air panas di kamar mandi.",
+  },
+  {
+    name: "Wulan",
+    rating: 4,
+    comment:
+      "Pemilik kos ramah dan membantu. Kamar nyaman dengan kasur dan lemari yang bagus.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Hendra",
+    rating: 4,
+    comment:
+      "Lokasi strategis dekat dengan minimarket, namun kadang berisik saat malam.",
+  },
+  {
+    name: "Tina",
+    rating: 4,
+    comment:
+      "Suka dengan suasananya yang tenang, tetapi kamar mandi perlu lebih sering dibersihkan.",
+    image: "https://via.placeholder.com/150",
   },
 ];
 

@@ -20,13 +20,11 @@ const DetailCostScreen = () => {
   const handleClick = () => {
     Alert.alert("Coming Soon");
   };
+
   return (
-    <View className="flex-1 bg-white">
+    <View style={{ flex: 1, backgroundColor: "black" }}>
       {/* Gambar Background */}
-      <View
-        className="w-full h-80 absolute top-0 left-0 right-0"
-        style={{ pointerEvents: "box-none" }}
-      >
+      <View style={{ height: 300, position: "relative", zIndex: 1 }}>
         <Image
           source={DEFAULT_COST}
           style={{
@@ -37,36 +35,94 @@ const DetailCostScreen = () => {
           }}
         />
         <View
-          className="absolute bottom-0 left-0 right-0 bg-black/50 h-full"
-          style={{ pointerEvents: "none" }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          }}
         />
-        <View className="flex justify-center items-center h-full">
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 300,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Image
             source={DEFAULT_PROFILE}
-            className="w-20 h-20 aspect-square object-cover rounded-full"
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+            }}
           />
-          <ThemedText type="title" className="mt-4 text-white">
+          <ThemedText type="title" style={{ color: "white", marginTop: 8 }}>
             Sarifuddin
           </ThemedText>
-          <ThemedText type="defaultSemiBold" className="text-white">
+          <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
             Pemilik
           </ThemedText>
-          <View className="flex flex-row space-x-2 mt-4 z-10">
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 16,
+              gap: 8,
+            }}
+          >
             <TouchableOpacity
-              className="w-12 h-12 aspect-square rounded-full flex justify-center items-center bg-custom-3"
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 24,
+                backgroundColor: C[3],
+                justifyContent: "center",
+                alignItems: "center",
+              }}
               onPress={handleClick}
-              style={{ zIndex: 1 }}
             >
               <Ionicons name="chatbox-ellipses" size={24} color="white" />
             </TouchableOpacity>
-
-            <TouchableOpacity className="w-12 h-12 aspect-square rounded-full flex justify-center items-center bg-custom-3">
+            <TouchableOpacity
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 24,
+                backgroundColor: C[3],
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Ionicons name="bookmark-outline" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity className="w-12 h-12 aspect-square rounded-full flex justify-center items-center bg-custom-3">
+            <TouchableOpacity
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 24,
+                backgroundColor: C[3],
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Ionicons name="earth" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity className="w-12 h-12 aspect-square rounded-full flex justify-center items-center bg-custom-3">
+            <TouchableOpacity
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 24,
+                backgroundColor: C[3],
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <MaterialIcons name="360" size={24} color="white" />
             </TouchableOpacity>
           </View>
@@ -74,33 +130,41 @@ const DetailCostScreen = () => {
       </View>
 
       {/* Konten Scrollable */}
-      <ScrollView contentContainerStyle={{ paddingTop: 300 }}>
-        <View
-          className="bg-white p-4"
-          style={{
-            shadowColor: "black",
-            width: "100%",
-            shadowOpacity: 0.5,
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 10,
-            elevation: 3,
-            backgroundColor: "white",
-            overflow: "hidden",
-            borderTopRightRadius: 16,
-            borderTopLeftRadius: 16,
-            gap: 24,
-          }}
-        >
-          <View className="space-y-4">
+      <View
+        style={{
+          marginTop: -20,
+          zIndex: 2,
+          borderTopRightRadius: 16,
+          borderTopLeftRadius: 16,
+          elevation: 3,
+          height: "auto",
+          backgroundColor: "white",
+          overflow: "hidden",
+        }}
+      >
+        <ScrollView contentContainerStyle={{ padding: 16 }}>
+          <View style={{ marginBottom: 24, gap: 8 }}>
             <ThemedText type="sectionTitle">Kos Indehoy</ThemedText>
             <ThemedText>
               Kos ini menawarkan keindahan alam dan keindahan hidupnya. Kos ini
               memiliki fasilitas yang lengkap dan cocok untuk para penghuni.
             </ThemedText>
           </View>
-          <View className="space-y-4">
-            <View className="flex flex-row justify-between items-center">
-              <View className="flex flex-row space-x-2 items-center">
+          <View style={{ marginBottom: 24, gap: 8 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
                 <ThemedText type="sectionTitle">Ulasan</ThemedText>
                 <Ionicons name="star" size={24} color="#fa9006" />
                 <ThemedText type="defaultSemiBold">4.9</ThemedText>
@@ -110,7 +174,7 @@ const DetailCostScreen = () => {
                 <ThemedText type="link">Lihat Semua</ThemedText>
               </TouchableOpacity>
             </View>
-            <View className="py-2">
+            <View style={{ paddingTop: 8 }}>
               <FlatList
                 data={LIST_REVIEWS}
                 renderItem={({ item }) => (
@@ -124,16 +188,29 @@ const DetailCostScreen = () => {
                 keyExtractor={(item) => item.name}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
+                contentContainerStyle={{ gap: 8, paddingVertical: 2 }}
               />
             </View>
           </View>
-          <View className="space-y-4">
-            <View className="flex flex-row justify-between items-center">
-              <ThemedText type="sectionTitle">Lokasi</ThemedText>
-            </View>
-            <TouchableOpacity className="flex flex-row space-x-4">
-              <View className="flex justify-center items-center w-12 h-12 aspect-square rounded-full bg-gray-200">
+          <View style={{ marginBottom: 24, gap: 8 }}>
+            <ThemedText type="sectionTitle">Lokasi</ThemedText>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 16,
+              }}
+            >
+              <View
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 24,
+                  backgroundColor: "#e0e0e0",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Ionicons name="location" size={24} color={C[1]} />
               </View>
               <View>
@@ -142,51 +219,60 @@ const DetailCostScreen = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View className="">
-            <View className="flex">
-              <CustomInputText
-                label="Beri Ulasan"
-                placeholder="Tulis ulasanmu disini"
-                multiline
-                numberOfLines={4}
-                onChangeText={() => {}}
-                value=""
-              />
-            </View>
+          <View>
+            <CustomInputText
+              label="Beri Ulasan"
+              placeholder="Tulis ulasanmu disini"
+              multiline
+              numberOfLines={4}
+              onChangeText={() => {}}
+              value=""
+            />
+            <TouchableOpacity className="bg-white border-custom-1 border px-2 py-2 rounded-lg flex items-center justify-center h-10 space-x-2">
+              <Text className="text-sm text-custom-1 text-center">Kirim</Text>
+            </TouchableOpacity>
           </View>
-          <View className="h-40" />
-        </View>
-      </ScrollView>
+          <View className="h-96" />
+          <View className="h-20" />
+        </ScrollView>
+      </View>
 
+      {/* Footer */}
       <View
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          padding: 16,
           backgroundColor: "white",
+          padding: 16,
           borderTopWidth: 1,
           borderColor: "#ddd",
-          alignItems: "center",
-          gap: 16,
+          zIndex: 4,
         }}
       >
-        <View className="flex flex-row justify-between w-full items-center">
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 16,
+          }}
+        >
           <ThemedText type="default">Harga</ThemedText>
           <ThemedText type="subtitle">Rp. 1.000.000</ThemedText>
         </View>
         <TouchableOpacity
           style={{
             backgroundColor: C[1],
-            paddingVertical: 12,
-            paddingHorizontal: 32,
             borderRadius: 8,
+            paddingVertical: 12,
             width: "100%",
             alignItems: "center",
           }}
+          onPress={() => Alert.alert("Booking Sekarang")}
         >
-          <ThemedText type="defaultSemiBold" className="text-white">
+          <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
             Booking Sekarang
           </ThemedText>
         </TouchableOpacity>
@@ -197,27 +283,67 @@ const DetailCostScreen = () => {
 
 const LIST_REVIEWS = [
   {
-    name: "Asep",
-    image: "https://via.placeholder.com/150",
-    rating: 4.5,
-    comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  },
-  {
-    name: "Budi",
-    rating: 4.0,
-    comment: "Pellentesque habitant morbi tristique senectus et netus.",
-  },
-  {
-    name: "Citra",
-    image: "https://via.placeholder.com/150",
-    rating: 3.8,
-    comment: "Vivamus suscipit tortor eget felis porttitor volutpat.",
-  },
-  {
-    name: "Dewi",
-    rating: 4.2,
+    name: "Aldo",
+    rating: 4.8,
     comment:
-      "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.",
+      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Rina",
+    rating: 4,
+    comment:
+      "Tempat yang tenang untuk belajar dan istirahat. Harga sesuai dengan fasilitas.",
+  },
+  {
+    name: "Dika",
+    rating: 4,
+    comment: "Kamar luas dan bersih, namun sinyal WiFi terkadang lambat.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Maya",
+    rating: 5,
+    comment:
+      "Sangat puas dengan kos ini! Lingkungan aman dan nyaman, serta dekat dengan kampus.",
+  },
+  {
+    name: "Yudi",
+    rating: 3,
+    comment: "Kos lumayan, namun fasilitas dapurnya perlu diperbarui.",
+  },
+  {
+    name: "Santi",
+    rating: 4,
+    comment:
+      "Kebersihan terjaga dengan baik dan terdapat parkir motor yang luas.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Rico",
+    rating: 4,
+    comment:
+      "Harga cukup terjangkau dengan fasilitas AC dan air panas di kamar mandi.",
+  },
+  {
+    name: "Wulan",
+    rating: 4,
+    comment:
+      "Pemilik kos ramah dan membantu. Kamar nyaman dengan kasur dan lemari yang bagus.",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    name: "Hendra",
+    rating: 4,
+    comment:
+      "Lokasi strategis dekat dengan minimarket, namun kadang berisik saat malam.",
+  },
+  {
+    name: "Tina",
+    rating: 4,
+    comment:
+      "Suka dengan suasananya yang tenang, tetapi kamar mandi perlu lebih sering dibersihkan.",
+    image: "https://via.placeholder.com/150",
   },
 ];
 
