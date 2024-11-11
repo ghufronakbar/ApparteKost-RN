@@ -1,13 +1,21 @@
 import { ThemedText } from "@/components/ThemedText";
 import { CustomInputText } from "@/components/ui/CustomInputText";
 import { APP_NAME, APP_TEXT } from "@/data/app";
+import { FormLogin, initFormLogin, login } from "@/services/account";
 import { router } from "expo-router";
-import { TouchableOpacity, SafeAreaView, ScrollView, View } from "react-native";
+import { useState } from "react";
+import {
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  View,
+  ActivityIndicator,
+} from "react-native";
 
 const LoginScreen = () => {
-  const handleLogin = () => {
-    router.replace("/(home)");
-  };
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState<FormLogin>(initFormLogin);
+
   return (
     <SafeAreaView className="flex-1 ">
       <ScrollView
@@ -25,25 +33,29 @@ const LoginScreen = () => {
               <CustomInputText
                 label="Email"
                 placeholder="Masukkan Alamat Email"
-                onChangeText={(value) => {}}
-                value={"abipamungkas@uty.ac.id"}
+                onChangeText={(value) => setForm({ ...form, email: value })}
+                value={form.email}
                 keyboardType="email-address"
               />
               <CustomInputText
                 label="Password"
                 placeholder="Masukkan Password"
-                onChangeText={(value) => {}}
-                value={"asfasfasfaffas"}
+                onChangeText={(value) => setForm({ ...form, password: value })}
+                value={form.password}
                 secureTextEntry
               />
               <View className="mt-4">
                 <TouchableOpacity
                   className="bg-custom-1 px-2 py-2 rounded-lg flex items-center justify-center h-10 space-x-2"
-                  onPress={handleLogin}
+                  onPress={() => login(form, loading, setLoading)}
                 >
-                  <ThemedText className="text-sm text-white text-center">
-                    Masuk
-                  </ThemedText>
+                  {loading ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <ThemedText className="text-sm text-white text-center">
+                      Masuk
+                    </ThemedText>
+                  )}
                 </TouchableOpacity>
                 <View className="flex flex-row justify-between items-center my-6">
                   <View className="h-px w-[30%] bg-neutral-200" />

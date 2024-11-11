@@ -1,82 +1,97 @@
-import { DEFAULT_IMAGE, DEFAULT_PROFILE } from "@/assets";
+import { DEFAULT_PROFILE } from "@/assets";
 import { ThemedText } from "@/components/ThemedText";
-import CardCost from "@/components/ui/CardCost";
-import ListDistrict from "@/components/ui/ListDistrict";
-import { C } from "@/constants/Colors";
-import { Inter } from "@/constants/Fonts";
+import { initProfile, ResProfile } from "@/models/ResAccount";
+import { getSavedProfile, logout } from "@/services/account";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 const SettingScreen = () => {
+  const [profile, setProfile] = useState<ResProfile>(initProfile);
+  const fetchProfile = async () => {
+    const res = await getSavedProfile();
+    res && setProfile(res);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchProfile();
+    }, [])
+  );
+
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View className="flex px-4 space-y-4">
-          {/* Header Section */}
+    <>
+      <SafeAreaView>
+        <ScrollView>
+          <View className="flex px-4 space-y-4">
+            {/* Header Section */}
 
-          <ThemedText
-            className="w-4/5 mb-4 mt-8"
-            type="title"
-            numberOfLines={1}
-          >
-            Pengaturan
-          </ThemedText>
+            <ThemedText
+              className="w-4/5 mb-4 mt-8"
+              type="title"
+              numberOfLines={1}
+            >
+              Pengaturan
+            </ThemedText>
 
-          {/* Profile Section */}
-          <View className="flex flex-row my-4 justify-between items-center w-full px-4">
-            <Image
-              source={DEFAULT_PROFILE}
-              className="w-12 aspect-square rounded-full object-cover"
-            />
-            <View className="w-4/5 flex flex-col">
-              <ThemedText type="title" numberOfLines={1} className="text-2xl">
-                Abi Pamungkas
-              </ThemedText>
-              <ThemedText
-                type="subtitle"
-                numberOfLines={1}
-                className="text-gray-500"
-              >
-                Profile
-              </ThemedText>
+            {/* Profile Section */}
+            <View className="flex flex-row my-4 justify-between items-center w-full px-4">
+              <Image
+                source={
+                  profile.picture ? { uri: profile.picture } : DEFAULT_PROFILE
+                }
+                className="w-12 aspect-square rounded-full object-cover"
+              />
+              <View className="w-4/5 flex flex-col">
+                <ThemedText type="title" numberOfLines={1} className="text-2xl">
+                  {profile.name}
+                </ThemedText>
+                <ThemedText
+                  type="subtitle"
+                  numberOfLines={1}
+                  className="text-gray-500"
+                >
+                  Profile
+                </ThemedText>
+              </View>
+            </View>
+            <View className="h-px w-full bg-gray-300" />
+            {/* Menu Section */}
+            <View className="px-4">
+              {LIST_MENU.map((item, i) => (
+                <ListMenu
+                  key={i}
+                  icon={item.icon}
+                  name={item.name}
+                  color={item.color}
+                  href={item.href}
+                />
+              ))}
+            </View>
+            <View className="h-px w-full bg-gray-300" />
+            <View className="px-4">
+              <ListMenu
+                icon={
+                  <Ionicons
+                    name="log-out-outline"
+                    size={24}
+                    color={"#f44336"}
+                  />
+                }
+                name="Keluar"
+                color="#ffcdd2"
+                href="/login"
+                onPress={logout}
+              />
             </View>
           </View>
-          <View className="h-px w-full bg-gray-300" />
-          {/* Menu Section */}
-          <View className="px-4">
-            {LIST_MENU.map((item, i) => (
-              <ListMenu
-                key={i}
-                icon={item.icon}
-                name={item.name}
-                color={item.color}
-                href={item.href}
-              />
-            ))}
-          </View>
-          <View className="h-px w-full bg-gray-300" />
-          <View className="px-4">
-            <ListMenu
-              icon={
-                <Ionicons name="log-out-outline" size={24} color={"#f44336"} />
-              }
-              name="Keluar"
-              color="#ffcdd2"
-              href="/"
-            />
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+      <Toast />
+    </>
   );
 };
 
@@ -114,13 +129,14 @@ interface ListMenuProps {
   name: string;
   color: string;
   href: string;
+  onPress?: () => void;
 }
 
-const ListMenu = ({ icon, name, color, href }: ListMenuProps) => {
+const ListMenu = ({ icon, name, color, href, onPress }: ListMenuProps) => {
   return (
     <TouchableOpacity
       className="flex flex-row my-4 justify-between items-center w-full"
-      onPress={() => router.push(href)}
+      onPress={() => (onPress ? onPress() : router.push(href))}
     >
       <View
         className="w-12 h-12 aspect-square rounded-full flex justify-center items-center"

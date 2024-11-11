@@ -5,7 +5,6 @@ export const toastSuccess = (message?: string | null) => {
     type: "success",
     text1: "Berhasil",
     text2: message || "",
-    position: "bottom",
   });
 };
 
@@ -14,7 +13,6 @@ export const toastError = (message?: string | null) => {
     type: "error",
     text1: "Terjadi kesalahan",
     text2: message || "Silahkan coba lagi",
-    position: "bottom",
   });
 };
 
@@ -23,7 +21,6 @@ export const toastFill = () =>
     type: "error",
     text1: "Lengkapi data",
     text2: "Isi semua kolom",
-    position: "bottom",
   });
 
 export const toastLoading = () => {

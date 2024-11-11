@@ -1,8 +1,12 @@
-import React from 'react';
-import { WebView } from 'react-native-webview';
-import { StyleSheet, View } from 'react-native';
+import React from "react";
+import { WebView } from "react-native-webview";
+import { StyleSheet, View } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 const PanoramaScreen = () => {
+  const { panoramaPicture } = useLocalSearchParams() as {
+    panoramaPicture: string;
+  };
   const HTMLContent = `
     <!DOCTYPE html>
     <html>
@@ -21,7 +25,7 @@ const PanoramaScreen = () => {
       <script>
         pannellum.viewer('panorama', {
           type: 'equirectangular',
-          panorama: 'https://res.cloudinary.com/dga0wmldp/image/upload/v1731071022/indekos/panorama/OYz1CtPK.jpg',
+          panorama: '${panoramaPicture}',
           autoLoad: true,
           autoRotate: -2,
           showControls: true,
@@ -39,7 +43,7 @@ const PanoramaScreen = () => {
     <View style={styles.container}>
       <WebView
         style={{ flex: 1 }}
-        originWhitelist={['*']}
+        originWhitelist={["*"]}
         source={{ html: HTMLContent }}
         javaScriptEnabled={true}
         domStorageEnabled={true}

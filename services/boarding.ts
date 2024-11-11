@@ -1,5 +1,10 @@
 import axiosInstance from "@/config/axiosInstance";
-import { toastError, toastLoading, toastSuccess } from "@/helper/toast";
+import {
+  toastError,
+  toastFill,
+  toastLoading,
+  toastSuccess,
+} from "@/helper/toast";
 import { ResFail, ResSuccess } from "@/models/ApiRes";
 import {
   ResBoarding,
@@ -87,7 +92,7 @@ export const bookmarkBoarding = async (
   }
 };
 
-interface FormReviewBoarding {
+export interface FormReviewBoarding {
   boardingHouseId: number;
   rating: number;
   review: string | null;
@@ -107,6 +112,10 @@ export const reviewBoarding = async (
 ) => {
   try {
     if (loading) return;
+    if (form.rating === 0) {
+      toastError("Rating harus diisi");
+      return;
+    }
     toastLoading();
     setLoading(true);
     const { data } = await axiosInstance.patch<ResSuccess<ResBoardingDetail>>(

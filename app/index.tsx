@@ -1,7 +1,7 @@
 import { APP_NAME } from "@/data/app";
 import { useEffect, useRef } from "react";
 import { View, Animated } from "react-native";
-import { router } from "expo-router";
+import { checkAuth } from "@/services/account";
 
 const IndexScreen = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -12,7 +12,7 @@ const IndexScreen = () => {
       duration: 1000,
       useNativeDriver: true,
     }).start(() => {
-      router.replace("/welcome");
+      checkAuth();
     });
   }, [fadeAnim]);
 

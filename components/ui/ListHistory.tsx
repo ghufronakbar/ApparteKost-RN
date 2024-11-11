@@ -4,16 +4,16 @@ import { DEFAULT_IMAGE } from "@/assets";
 import { useState } from "react";
 
 interface Props {
-  description: string;
-  date: Date;
+  message: string;
+  time: string;
   image?: string | null;
   district: string;
   subdistrict: string;
 }
 
 const ListHistory = ({
-  description,
-  date,
+  message,
+  time,
   image,
   district,
   subdistrict,
@@ -46,7 +46,7 @@ const ListHistory = ({
         />
         <View className="w-2/3 flex flex-col">
           <ThemedText type="defaultSemiBold" numberOfLines={isExpand ? 2 : 100}>
-            {description}
+            {message}
           </ThemedText>
           <ThemedText type="default" className="text-sm">
             {subdistrict} | {district}
@@ -54,7 +54,7 @@ const ListHistory = ({
         </View>
       </View>
       <ThemedText type="default" className="text-sm">
-        {Math.floor(Math.random() * 10) + 1}j
+        {time}
       </ThemedText>
     </TouchableOpacity>
   );

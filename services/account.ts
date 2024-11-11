@@ -15,6 +15,7 @@ import {
 } from "@/models/ResAccount";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 export interface FormLogin {
   email: string;
@@ -213,10 +214,12 @@ export const initFormChangePassword: FormChangePassword = {
 
 export const changePassword = async (
   form: FormChangePassword,
+  setForm: (form: FormChangePassword) => void,
   loading: boolean,
   setLoading: (loading: boolean) => void
 ) => {
   if (loading) return;
+  console.log({ form });
   if (!form.oldPassword || !form.newPassword || !form.confirmPassword) {
     toastFill();
     return;
@@ -239,12 +242,13 @@ export const changePassword = async (
     toastError(err.response?.data.message);
   } finally {
     setLoading(false);
+    setForm(initFormChangePassword);
   }
 };
 
-export const getHistories = async () => {
+export const getAllHistories = async () => {
   try {
-    const { data } = await axiosInstance.get<ResSuccess<ResHistory>>(
+    const { data } = await axiosInstance.get<ResSuccess<ResHistory[]>>(
       "/account/history"
     );
     return data.data;
@@ -252,5 +256,49 @@ export const getHistories = async () => {
     console.log(error);
     const err = error as ResFail;
     toastError(err.response?.data.message);
+  }
+};
+
+export const logout = () => {
+  toastSuccess("Berhasil keluar");
+  AsyncStorage.clear();
+  router.replace("/login");
+};
+
+export const uploadProfilePicture = async (
+  picture: ImagePicker.ImagePickerAsset,
+  loading: boolean,
+  setLoading: (loading: boolean) => void,
+  afterUpload?: () => void
+) => {
+  try {
+    if (loading) return;
+    toastLoading();
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("picture", {
+      name: picture?.fileName || "picture.jpg",
+      type: "image/jpg",
+      uri: picture.uri,
+    } as any);
+    const { data } = await axiosInstance.patch<ResSuccess<ResProfile>>(
+      "/account",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    await AsyncStorage.setItem(USER, JSON.stringify(data.data));
+    toastSuccess(data.message);
+    afterUpload?.();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
+  } finally {
+    setLoading(false);
   }
 };

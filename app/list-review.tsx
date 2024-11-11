@@ -1,9 +1,19 @@
 import { ThemedText } from "@/components/ThemedText";
 import ListReview from "@/components/ui/ListReview";
+import { Review } from "@/models/ResBoarding";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useLocalSearchParams } from "expo-router";
 import { FlatList, View } from "react-native";
 
 const ListReviewScreen = () => {
+  const { totalReview, rating, reviews } = useLocalSearchParams() as {
+    totalReview: string;
+    rating: string;
+    reviews: string;
+  };
+
+  const jsonReviews: Review[] = JSON.parse(reviews);
+
   return (
     <View className="flex-1 bg-gray-50">
       <View
@@ -26,20 +36,21 @@ const ListReviewScreen = () => {
             <View className="flex flex-row space-x-2 items-center">
               <ThemedText type="sectionTitle">Ulasan</ThemedText>
               <Ionicons name="star" size={24} color="#fa9006" />
-              <ThemedText type="defaultSemiBold">4.9</ThemedText>
+              <ThemedText type="defaultSemiBold">{rating}</ThemedText>
             </View>
-            <ThemedText type="link">155 Ulasan</ThemedText>
+            <ThemedText type="link">{totalReview} Ulasan</ThemedText>
           </View>
           <FlatList
-            data={LIST_REVIEWS}
+            data={jsonReviews}
             renderItem={({ item }) => (
               <ListReview
                 comment={item.comment}
-                name={item.name}
+                name={item.user.name}
                 rating={item.rating}
-                image={item.image}
+                image={item.user.picture}
                 isFull
-                isDeletable={item.isDeletable}
+                key={item.reviewId}
+                createdAt={item.createdAt}
               />
             )}
             keyExtractor={(item) => item.name}
@@ -50,46 +61,5 @@ const ListReviewScreen = () => {
     </View>
   );
 };
-
-const LIST_REVIEWS = [
-  {
-    name: "Abi Pamungkas",
-    rating: 4,
-    comment:
-      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
-    isDeletable: true,
-  },
-  {
-    name: "Aldo",
-    rating: 4.8,
-    comment:
-      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/c/cb/Elon_Musk_Royal_Society_crop.jpg",
-  },
-  {
-    name: "Bekti",
-    rating: 4,
-    comment:
-      "Tempat yang tenang untuk belajar dan istirahat. Harga sesuai dengan fasilitas.",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Donald_Trump_official_portrait.jpg/1200px-Donald_Trump_official_portrait.jpg",
-  },
-  {
-    name: "Maharani",
-    rating: 4,
-    comment: "Kamar luas dan bersih, namun sinyal WiFi terkadang lambat.",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Kamala_Harris_Vice_Presidential_Portrait.jpg/640px-Kamala_Harris_Vice_Presidential_Portrait.jpg",
-  },
-  {
-    name: "Martin",
-    rating: 5,
-    comment:
-      "Sangat puas dengan kos ini! Lingkungan aman dan nyaman, serta dekat dengan kampus.",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/640px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg",
-  },
-];
 
 export default ListReviewScreen;

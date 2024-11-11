@@ -3,8 +3,15 @@ import { ThemedText } from "@/components/ThemedText";
 import CardCost from "@/components/ui/CardCost";
 import ListDistrict from "@/components/ui/ListDistrict";
 import { C } from "@/constants/Colors";
+import { initProfile, ResProfile } from "@/models/ResAccount";
+import { ResBoarding } from "@/models/ResBoarding";
+import { getSavedProfile } from "@/services/account";
+import { getAllBoardings, getKeyLocation } from "@/services/boarding";
+import formatDate from "@/utils/formatDate";
+import { getCurrentPosition } from "@/utils/getCurrentLocation";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
   Image,
@@ -16,13 +23,45 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
-  const districts = [
-    "Bantul",
-    "Sleman",
-    "Kulon Progo",
-    "Gunung Kidul",
-    "Yogyakarta",
-  ];
+  const [data, setData] = useState<ResBoarding>();
+  const [keyLoc, setKeyLoc] = useState<string[]>([]);
+  const [profile, setProfile] = useState<ResProfile>(initProfile);
+  const [location, setLocation] = useState<string>("");
+
+  const date = new Date();
+
+  const fetchData = async () => {
+    const res = await getAllBoardings();
+    res && setData(res);
+  };
+
+  const fetchKeyLocs = async () => {
+    const res = await getKeyLocation();
+    res && setKeyLoc(res.all);
+  };
+
+  const fetchProfile = async () => {
+    const res = await getSavedProfile();
+    res && setProfile(res);
+  };
+
+  const fetchLocation = async () => {
+    const res = await getCurrentPosition();
+    res && setLocation(res.addressDetail.join(", "));
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchProfile();
+      fetchLocation();
+    }, [])
+  );
+
+  useEffect(() => {
+    fetchData();
+    fetchKeyLocs();
+  }, []);
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -30,11 +69,13 @@ const HomeScreen = () => {
         <View className="flex px-4 space-y-4">
           <View className="flex flex-row mt-4 justify-between items-center w-full">
             <ThemedText className="w-4/5" type="title" numberOfLines={1}>
-              Hello Abi Pamungkas
+              Hello {profile.name}
             </ThemedText>
             <TouchableOpacity className="w-12 aspect-square rounded-full object-cover">
               <Image
-                source={DEFAULT_PROFILE}
+                source={
+                  profile.picture ? { uri: profile.picture } : DEFAULT_PROFILE
+                }
                 className="w-full h-full object-cover rounded-full"
               />
             </TouchableOpacity>
@@ -103,14 +144,14 @@ const HomeScreen = () => {
                   type="subtitle"
                   numberOfLines={1}
                 >
-                  Sabtu, 15 Oktober
+                  {formatDate(date.toISOString())}
                 </ThemedText>
                 <ThemedText
                   className="text-custom-1"
                   type="default"
                   numberOfLines={2}
                 >
-                  Yogyakarta, Indonesia
+                  {location}
                 </ThemedText>
               </View>
             </TouchableOpacity>
@@ -119,7 +160,7 @@ const HomeScreen = () => {
           <View className="w-full">
             <ThemedText type="sectionTitle">Daerah</ThemedText>
             <FlatList
-              data={districts}
+              data={keyLoc}
               renderItem={({ item }) => <ListDistrict name={item} />}
               keyExtractor={(item) => item}
               horizontal
@@ -131,12 +172,13 @@ const HomeScreen = () => {
           <View className="w-full flex space-y-2">
             <ThemedText type="sectionTitle">Terpopuler</ThemedText>
             <View className="w-full flex flex-row flex-wrap justify-between">
-              {LIST_COST.map((item) => (
+              {data?.all.map((item) => (
                 <CardCost
-                  name={item.name}
-                  image={item.image}
-                  rating={item.rating}
-                  key={item.name}
+                  id={item.boardingHouseId.toString()}
+                  name={item?.name}
+                  image={item?.pictures[0]?.picture}
+                  rating={item.averageRating}
+                  key={item.boardingHouseId}
                 />
               ))}
             </View>
@@ -146,62 +188,5 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
-
-const LIST_COST = [
-  {
-    name: "Kos Damai",
-    image:
-      "https://cdn1-production-images-kly.akamaized.net/0q-sddESXGDpLdVz4IXelsZAW24=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/861628/original/073424800_1429960385-3.JPG",
-    rating: 4.5,
-  },
-  {
-    name: "Kos Harmoni",
-    image:
-      "https://kontainerindonesia.co.id/blog/wp-content/uploads/2024/06/Kos-Kosan-dari-Kontainer.jpg",
-    rating: 4.7,
-  },
-  {
-    name: "Kos Mewah",
-    image:
-      "https://d3p0bla3numw14.cloudfront.net/news-content/img/2021/06/14120054/Bisnis-Kos-kosan.png",
-    rating: 4.8,
-  },
-  {
-    name: "Kos Nyaman",
-    image: "https://ykpbni.or.id/uploads/publikasi/3737-Bisnis_Kost.jpg",
-    rating: 4.3,
-  },
-  {
-    name: "Kos Sejahtera",
-    image:
-      "https://storage.googleapis.com/storage-ajaib-prd-platform-wp-artifact/2020/10/Kos-kosan.jpg",
-    rating: 4.6,
-  },
-  {
-    name: "Kos Aman",
-    image:
-      "https://homesyariah.com/wp-content/uploads/2020/12/www.homesyariah.com-rumah-kos-Grand_Royal_Radar_Baru-004.jpg",
-    rating: 4.4,
-  },
-  {
-    name: "Kos Ceria",
-    image:
-      "https://www.simplyhomy.com/wp-content/uploads/2018/08/bisnis-kos-kosan-570x300.jpg",
-    rating: 4.2,
-  },
-  {
-    name: "Kos Sentosa",
-    image:
-      "https://www.99.co/id/panduan/wp-content/uploads/2022/11/peraturan-kos-kosan-1000x630.jpg",
-    rating: 4.9,
-  },
-  { name: "Kos Indah", image: null, rating: 4.1 },
-  {
-    name: "Kos Bahagia",
-    image:
-      "https://pennyu.co.id/wp-content/uploads/2023/04/Kost-mahasiswa-jpg.webp",
-    rating: 4.5,
-  },
-];
 
 export default HomeScreen;

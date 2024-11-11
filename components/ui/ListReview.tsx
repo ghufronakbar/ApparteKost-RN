@@ -1,15 +1,17 @@
 import { DEFAULT_IMAGE, DEFAULT_PROFILE } from "@/assets";
 import { ThemedText } from "@/components/ThemedText";
+import formatTime from "@/utils/formatTime";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, ScrollView, View } from "react-native";
 
 interface Props {
   name: string;
-  image?: string;
+  image?: string | null;
   rating: number;
   comment: string | null;
   isFull?: boolean;
   isDeletable?: boolean;
+  createdAt: string;
 }
 
 const ListReview = ({
@@ -19,6 +21,7 @@ const ListReview = ({
   comment,
   isFull = false,
   isDeletable,
+  createdAt,
 }: Props) => {
   return (
     <View
@@ -57,7 +60,7 @@ const ListReview = ({
               numberOfLines={1}
               className="text-gray-500"
             >
-              {Math.floor(Math.random() * 10) + 1} hari lalu
+              {formatTime(new Date(createdAt))}
             </ThemedText>
           </View>
         </View>
@@ -66,13 +69,11 @@ const ListReview = ({
             <Ionicons name="star" size={16} color="#fa9006" />
             <ThemedText type="defaultSemiBold">{rating.toFixed(1)}</ThemedText>
           </View>
-          {false && (
-            <Ionicons name="backspace-sharp" size={16} color="red" />
-          )}
+          {false && <Ionicons name="backspace-sharp" size={16} color="red" />}
         </View>
       </View>
       <ThemedText type="default" numberOfLines={isFull ? 0 : 2}>
-        {comment}
+        {comment || "Tidak ada komentar"}
       </ThemedText>
     </View>
   );

@@ -4,15 +4,15 @@ import { ThemedText } from "../ThemedText";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { router } from "expo-router";
-import { C } from "@/constants/Colors";
 
 interface Props {
+  id: string;
   name: string;
   image?: string | null;
   rating: number;
 }
 
-const CardCost = ({ name, image = DEFAULT_IMAGE, rating }: Props) => {
+const CardCost = ({ name, image, rating, id }: Props) => {
   return (
     <TouchableOpacity
       style={{
@@ -32,7 +32,12 @@ const CardCost = ({ name, image = DEFAULT_IMAGE, rating }: Props) => {
         gap: 8,
         marginBottom: 16,
       }}
-      onPress={() => router.push(`/detail-cost`)}
+      onPress={() =>
+        router.push({
+          pathname: "/detail-cost",
+          params: { id },
+        })
+      }
     >
       <Image
         source={image ? { uri: image } : DEFAULT_IMAGE}
@@ -44,7 +49,7 @@ const CardCost = ({ name, image = DEFAULT_IMAGE, rating }: Props) => {
       <View className="flex flex-row items-center space-x-1">
         <Ionicons name="star" size={20} color={"#fa9006"} />
         <ThemedText type="default" numberOfLines={1}>
-          {rating}
+          {rating.toFixed(1)}
         </ThemedText>
       </View>
     </TouchableOpacity>

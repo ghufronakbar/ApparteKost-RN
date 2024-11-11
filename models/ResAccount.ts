@@ -10,6 +10,15 @@ export interface ResProfile {
   picture: string | null;
 }
 
+export const initProfile: ResProfile = {
+  userId: 0,
+  email: "Loading...",
+  name: "Loading...",
+  phone: "Loading...",
+  password: "",
+  picture: null,
+};
+
 export interface ResLogin {
   accessToken: string;
   role: Role;

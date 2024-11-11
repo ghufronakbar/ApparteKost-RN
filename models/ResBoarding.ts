@@ -28,11 +28,51 @@ export interface ResBoardingDetail {
   reviews: Review[];
   averageRating: number;
   urlGoogleMap: string;
+  urlWhatsapp: string;
   isBookmarked: boolean;
+  isBooked: boolean;
+  isReviewed: boolean;
   booking: Booking | null;
   review: Review | null;
   bookings: Booking[];
 }
+
+export const initResboardingDetail: ResBoardingDetail = {
+  boardingHouseId: 0,
+  name: "Loading...",
+  owner: "Loading...",
+  ownerPicture: null,
+  email: "Loading...",
+  phone: "Loading...",
+  password: "Loading...",
+  description: "Loading...",
+  district: "Loading...",
+  subdistrict: "Loading...",
+  location: "Loading...",
+  panoramaPicture: null,
+  maxCapacity: 0,
+  price: 0,
+  isPending: false,
+  isConfirmed: false,
+  isActive: false,
+  _count: {
+    bookings: 0,
+    pictures: 0,
+    reviews: 0,
+    bookmarks: 0,
+  },
+  pictures: [],
+  reviews: [],
+  averageRating: 0,
+  urlGoogleMap: "Loading...",
+  urlWhatsapp: "Loading...",
+  isBookmarked: false,
+  isBooked: false,
+  isReviewed: false,
+  booking: null,
+  review: null,
+  bookings: [],
+};
 
 export interface Booking {
   bookingId: number;
@@ -55,10 +95,13 @@ export interface Picture {
 
 export interface Review {
   reviewId: number;
+  userId: number;
+  boardingHouseId: number;
   name: string;
-  picture: string | null;
   rating: number;
   user: ResProfile;
+  comment: string | null;
+  createdAt: string;
 }
 
 export interface ResKeyLocation {
