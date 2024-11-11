@@ -8,8 +8,16 @@ LogBox.ignoreAllLogs();
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
-  const [fontsLoaded] = useFonts({
-    Inter: require("@/assets/fonts/Inter.ttf"),
+  const [fontsLoaded, fontsError] = useFonts({
+    "Outfit-Thin": require("@/assets/fonts/Outfit-Thin.ttf"),
+    "Outfit-ExtraLight": require("@/assets/fonts/Outfit-ExtraLight.ttf"),
+    "Outfit-Light": require("@/assets/fonts/Outfit-Light.ttf"),
+    "Outfit-Regular": require("@/assets/fonts/Outfit-Regular.ttf"),
+    "Outfit-Medium": require("@/assets/fonts/Outfit-Medium.ttf"),
+    "Outfit-SemiBold": require("@/assets/fonts/Outfit-SemiBold.ttf"),
+    "Outfit-Bold": require("@/assets/fonts/Outfit-Bold.ttf"),
+    "Outfit-ExtraBold": require("@/assets/fonts/Outfit-ExtraBold.ttf"),
+    "Outfit-Black": require("@/assets/fonts/Outfit-Black.ttf"),
   });
 
   useEffect(() => {
@@ -17,6 +25,10 @@ export default function Layout() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <>
@@ -33,6 +45,9 @@ export default function Layout() {
           options={{
             title: "Pengaturan Profile",
             headerTintColor: "#000000",
+            headerTitleStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
           }}
         />
         <Stack.Screen
@@ -40,6 +55,9 @@ export default function Layout() {
           options={{
             title: "Ubah Kata Sandi",
             headerTintColor: "#000000",
+            headerTitleStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
           }}
         />
         <Stack.Screen
@@ -47,6 +65,9 @@ export default function Layout() {
           options={{
             title: "Tentang Kami",
             headerTintColor: "#000000",
+            headerTitleStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
           }}
         />
         <Stack.Screen
@@ -54,6 +75,9 @@ export default function Layout() {
           options={{
             title: "Informasi Umum",
             headerTintColor: "#000000",
+            headerTitleStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
           }}
         />
         <Stack.Screen
@@ -61,6 +85,9 @@ export default function Layout() {
           options={{
             title: "Ulasan",
             headerTintColor: "#000000",
+            headerTitleStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
           }}
         />
         <Stack.Screen

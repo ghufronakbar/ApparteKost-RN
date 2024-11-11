@@ -32,7 +32,12 @@ const SearchField = ({
     >
       <Ionicons name="search-outline" size={24} color="gray" />
       <TextInput
-        style={{ flex: 1, marginTop: isIOS ? -4 : 0, color: "#000" }}
+        style={{
+          flex: 1,
+          marginTop: isIOS ? -4 : 0,
+          color: "#000",
+          fontFamily: "Outfit-Regular",
+        }}
         className="text-base md:text-lg py-2 font-olight"
         placeholder={placeholder}
         placeholderTextColor={C[2]}

@@ -1,15 +1,8 @@
 import { ThemedText } from "@/components/ThemedText";
 import { CustomInputText } from "@/components/ui/CustomInputText";
-import { Inter } from "@/constants/Fonts";
 import { APP_NAME, APP_TEXT } from "@/data/app";
 import { router } from "expo-router";
-import {
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { TouchableOpacity, SafeAreaView, ScrollView, View } from "react-native";
 
 const LoginScreen = () => {
   const handleLogin = () => {
@@ -33,14 +26,14 @@ const LoginScreen = () => {
                 label="Email"
                 placeholder="Masukkan Alamat Email"
                 onChangeText={(value) => {}}
-                value={""}
+                value={"abipamungkas@uty.ac.id"}
                 keyboardType="email-address"
               />
               <CustomInputText
                 label="Password"
                 placeholder="Masukkan Password"
                 onChangeText={(value) => {}}
-                value={""}
+                value={"asfasfasfaffas"}
                 secureTextEntry
               />
               <View className="mt-4">
@@ -48,30 +41,24 @@ const LoginScreen = () => {
                   className="bg-custom-1 px-2 py-2 rounded-lg flex items-center justify-center h-10 space-x-2"
                   onPress={handleLogin}
                 >
-                  <Text
-                    className="text-sm text-white text-center"
-                    style={Inter}
-                  >
+                  <ThemedText className="text-sm text-white text-center">
                     Masuk
-                  </Text>
+                  </ThemedText>
                 </TouchableOpacity>
                 <View className="flex flex-row justify-between items-center my-6">
                   <View className="h-px w-[30%] bg-neutral-200" />
-                  <Text className="text-black" style={Inter}>
+                  <ThemedText className="text-black">
                     Belum memiliki akun?
-                  </Text>
+                  </ThemedText>
                   <View className="h-px w-[30%] bg-neutral-200" />
                 </View>
                 <TouchableOpacity
                   className="bg-white border-custom-1 border px-2 py-2 rounded-lg flex items-center justify-center h-10 space-x-2"
                   onPress={() => router.replace("/register")}
                 >
-                  <Text
-                    className="text-sm text-custom-1 text-center"
-                    style={Inter}
-                  >
+                  <ThemedText className="text-sm text-custom-1 text-center">
                     Buat Akun
-                  </Text>
+                  </ThemedText>
                 </TouchableOpacity>
               </View>
             </View>

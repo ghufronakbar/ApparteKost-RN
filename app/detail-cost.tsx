@@ -14,7 +14,9 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  Dimensions,
 } from "react-native";
+import { StaticCollage } from "@qeepsake/react-native-images-collage";
 
 const DetailCostScreen = () => {
   const messageClick = () => {
@@ -30,12 +32,71 @@ const DetailCostScreen = () => {
     router.push("/ar-view");
   };
 
+  const pictures = [
+    "https://pennyu.co.id/wp-content/uploads/2023/04/Kost-mahasiswa-jpg.webp",
+    "https://www.99.co/id/panduan/wp-content/uploads/2022/11/peraturan-kos-kosan-1000x630.jpg",
+    "https://storage.googleapis.com/storage-ajaib-prd-platform-wp-artifact/2020/10/Kos-kosan.jpg",
+    "https://homesyariah.com/wp-content/uploads/2020/12/www.homesyariah.com-rumah-kos-Grand_Royal_Radar_Baru-004.jpg",
+    "https://cdn1-production-images-kly.akamaized.net/0q-sddESXGDpLdVz4IXelsZAW24=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/861628/original/073424800_1429960385-3.JPG",
+    "https://kontainerindonesia.co.id/blog/wp-content/uploads/2024/06/Kos-Kosan-dari-Kontainer.jpg",
+  ];
+  const matrix = (): number[] => {
+    const length = pictures.length;
+    const isOdd = length % 2 !== 0;
+
+    if (isOdd && length > 5) {
+      const resultLength = Math.ceil(length / 2);
+      const result = Array.from({ length: resultLength }, () => 2);
+      const middleIndex = Math.floor(resultLength / 2);
+      result[middleIndex] = 1;
+      return result;
+    } else if (!isOdd && length > 5) {
+      const resultLength = length / 2;
+      const result = Array.from({ length: resultLength }, () => 2);
+      console.log({ length, result });
+      return result;
+    } else {
+      return Array.from({ length: length }, () => 1);
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "black" }}>
       {/* Gambar Background */}
       <View style={{ height: 300, position: "relative", zIndex: 1 }}>
-        <Image
+        {/* <Image
           source={DEFAULT_COST}
+          style={{
+            width: "100%",
+            height: "100%",
+            resizeMode: "cover",
+            position: "absolute",
+          }}
+        /> */}
+        <StaticCollage
+          width={Dimensions.get("window").width}
+          height={400}
+          images={pictures}
+          matrix={matrix()}
+          spacing={0}
+          panningLeftPadding={0}
+          panningRightPadding={0}
+          panningTopPadding={0}
+          panningBottomPadding={0}
+          separatorStyle={{
+            width: 0,
+            height: 0,
+            margin: 0,
+            padding: 0,
+            border: 0,
+          }}
+          containerStyle={{
+            width: "100%",
+            height: "100%",
+            margin: 0,
+            padding: 0,
+            border: 0,
+          }}
           style={{
             width: "100%",
             height: "100%",
@@ -65,7 +126,9 @@ const DetailCostScreen = () => {
           }}
         >
           <Image
-            source={DEFAULT_PROFILE}
+            source={{
+              uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/640px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg",
+            }}
             style={{
               width: 80,
               height: 80,
@@ -75,8 +138,12 @@ const DetailCostScreen = () => {
           <ThemedText type="title" style={{ color: "white", marginTop: 8 }}>
             Sarifuddin
           </ThemedText>
-          <ThemedText type="defaultSemiBold" style={{ color: "white" }}>
-            Pemilik
+          <ThemedText
+            type="defaultSemiBold"
+            className="font-bold"
+            style={{ color: "white" }}
+          >
+            Owner
           </ThemedText>
           <View
             style={{
@@ -90,7 +157,7 @@ const DetailCostScreen = () => {
                 width: 48,
                 height: 48,
                 borderRadius: 24,
-                backgroundColor: C[3],
+                backgroundColor: C[1],
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -103,7 +170,7 @@ const DetailCostScreen = () => {
                 width: 48,
                 height: 48,
                 borderRadius: 24,
-                backgroundColor: C[3],
+                backgroundColor: C[1],
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -116,7 +183,7 @@ const DetailCostScreen = () => {
                 width: 48,
                 height: 48,
                 borderRadius: 24,
-                backgroundColor: C[3],
+                backgroundColor: C[1],
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -129,7 +196,7 @@ const DetailCostScreen = () => {
                 width: 48,
                 height: 48,
                 borderRadius: 24,
-                backgroundColor: C[3],
+                backgroundColor: C[1],
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -156,7 +223,8 @@ const DetailCostScreen = () => {
       >
         <ScrollView contentContainerStyle={{ padding: 16 }}>
           <View style={{ marginBottom: 24, gap: 8 }}>
-            <ThemedText type="sectionTitle">Kos Indehoy</ThemedText>
+            <ThemedText type="sectionTitle">Kos Damai</ThemedText>
+            <ThemedText className="text-sm">Tersedia: 2 Kamar</ThemedText>
             <ThemedText>
               Kos ini menawarkan keindahan alam dan keindahan hidupnya. Kos ini
               memiliki fasilitas yang lengkap dan cocok untuk para penghuni.
@@ -295,67 +363,42 @@ const DetailCostScreen = () => {
 
 const LIST_REVIEWS = [
   {
+    name: "Abi Pamungkas",
+    rating: 4,
+    comment:
+      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
+    isDeletable: true,
+  },
+  {
     name: "Aldo",
     rating: 4.8,
     comment:
       "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/c/cb/Elon_Musk_Royal_Society_crop.jpg",
   },
   {
-    name: "Rina",
+    name: "Bekti",
     rating: 4,
     comment:
       "Tempat yang tenang untuk belajar dan istirahat. Harga sesuai dengan fasilitas.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Donald_Trump_official_portrait.jpg/1200px-Donald_Trump_official_portrait.jpg",
   },
   {
-    name: "Dika",
+    name: "Maharani",
     rating: 4,
     comment: "Kamar luas dan bersih, namun sinyal WiFi terkadang lambat.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Kamala_Harris_Vice_Presidential_Portrait.jpg/640px-Kamala_Harris_Vice_Presidential_Portrait.jpg",
   },
   {
-    name: "Maya",
+    name: "Martin",
     rating: 5,
     comment:
       "Sangat puas dengan kos ini! Lingkungan aman dan nyaman, serta dekat dengan kampus.",
-  },
-  {
-    name: "Yudi",
-    rating: 3,
-    comment: "Kos lumayan, namun fasilitas dapurnya perlu diperbarui.",
-  },
-  {
-    name: "Santi",
-    rating: 4,
-    comment:
-      "Kebersihan terjaga dengan baik dan terdapat parkir motor yang luas.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Rico",
-    rating: 4,
-    comment:
-      "Harga cukup terjangkau dengan fasilitas AC dan air panas di kamar mandi.",
-  },
-  {
-    name: "Wulan",
-    rating: 4,
-    comment:
-      "Pemilik kos ramah dan membantu. Kamar nyaman dengan kasur dan lemari yang bagus.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Hendra",
-    rating: 4,
-    comment:
-      "Lokasi strategis dekat dengan minimarket, namun kadang berisik saat malam.",
-  },
-  {
-    name: "Tina",
-    rating: 4,
-    comment:
-      "Suka dengan suasananya yang tenang, tetapi kamar mandi perlu lebih sering dibersihkan.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/640px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg",
   },
 ];
 

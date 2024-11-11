@@ -1,145 +1,256 @@
 import axiosInstance from "@/config/axiosInstance";
-import { Response } from "@/models/Response";
+import { ACCESS_TOKEN, USER } from "@/constants/AsyncStorage";
 import {
-  ACCESS_TOKEN,
-  EMAIL,
-  NAME,
-  PHONE,
-  PICTURE,
-  REFRESH_TOKEN,
-} from "@/constants/asyncStorage";
-import { User } from "@/models/User";
+  toastError,
+  toastFill,
+  toastLoading,
+  toastSuccess,
+} from "@/helper/toast";
+import { ResFail, ResSuccess } from "@/models/ApiRes";
+import {
+  ResHistory,
+  ResLogin,
+  ResProfile,
+  ResRegister,
+} from "@/models/ResAccount";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as ImagePicker from "expo-image-picker";
+import { router } from "expo-router";
 
-interface ProfileResponse extends Response {
-  data: User;
+export interface FormLogin {
+  email: string;
+  password: string;
 }
 
-export const getProfile = async (): Promise<ProfileResponse> => {
+export const initFormLogin: FormLogin = {
+  email: "",
+  password: "",
+};
+
+export const login = async (
+  form: FormLogin,
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+) => {
   try {
-    const { data } = await axiosInstance.get<ProfileResponse>(
-      "/account/profile"
+    if (loading) return;
+    if (!form.email || !form.password) {
+      toastFill();
+      return;
+    }
+    toastLoading();
+    setLoading(true);
+    const { data } = await axiosInstance.post<ResSuccess<ResLogin>>(
+      "/account/login",
+      form
     );
-    await AsyncStorage.setItem(PICTURE, data.data.picture || "");
-    await AsyncStorage.setItem(PHONE, data.data.phone);
-    await AsyncStorage.setItem(EMAIL, data.data.email);
-    await AsyncStorage.setItem(NAME, data.data.name);
-    return data;
+    await AsyncStorage.setItem(ACCESS_TOKEN, data.data.accessToken);
+    toastSuccess(data.message);
+    router.replace("/(home)");
   } catch (error) {
-    throw error;
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+export interface FormRegister {
+  email: string;
+  password: string;
+  phone: string;
+  name: string;
+}
+
+export const initFormRegister: FormRegister = {
+  email: "",
+  password: "",
+  phone: "",
+  name: "",
+};
+
+export const register = async (
+  form: FormRegister,
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    if (loading) return;
+    if (!form.email || !form.password || !form.phone || !form.name) {
+      toastFill();
+      return;
+    }
+    toastLoading();
+    setLoading(true);
+    const { data } = await axiosInstance.post<ResSuccess<ResRegister>>(
+      "/account/register",
+      form
+    );
+    const promises = [
+      AsyncStorage.setItem(ACCESS_TOKEN, data.data.accessToken),
+      AsyncStorage.setItem(USER, JSON.stringify(data.data)),
+    ];
+    await Promise.all(promises);
+    toastSuccess(data.message);
+    router.replace("/(home)");
+  } catch (error) {
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const checkAuth = async () => {
+  try {
+    const token = await AsyncStorage.getItem(ACCESS_TOKEN);
+    if (token) {
+      router.replace("/(home)");
+    } else {
+      router.replace("/login");
+    }
+  } catch (error) {
+    console.log(error);
+    router.replace("/login");
+  }
+};
+
+export interface FormProfile {
+  email: string;
+  name: string;
+  phone: string;
+}
+
+export const initFormProfile: FormProfile = {
+  email: "",
+  name: "",
+  phone: "",
+};
+
+export const updateProfile = async (
+  form: FormProfile,
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    if (loading) return;
+    if (!form.email || !form.name || !form.phone) {
+      toastFill();
+      return;
+    }
+    toastLoading();
+    setLoading(true);
+    const { data } = await axiosInstance.put<ResSuccess<ResProfile>>(
+      "/account",
+      form
+    );
+    await AsyncStorage.setItem(USER, JSON.stringify(data.data));
+    toastSuccess(data.message);
+  } catch (error) {
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const getProfile = async () => {
+  try {
+    const { data } = await axiosInstance.get<ResSuccess<ResProfile>>(
+      "/account"
+    );
+    return data.data;
+  } catch (error) {
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
   }
 };
 
 export const getSavedProfile = async () => {
   try {
-    const [picture, phone, email, name, accessToken, refreshToken] =
-      await Promise.all([
-        AsyncStorage.getItem(PICTURE),
-        AsyncStorage.getItem(PHONE),
-        AsyncStorage.getItem(EMAIL),
-        AsyncStorage.getItem(NAME),
-        AsyncStorage.getItem(ACCESS_TOKEN),
-        AsyncStorage.getItem(REFRESH_TOKEN),
-      ]);
-    return { picture, phone, email, name, accessToken, refreshToken };
+    const data = await AsyncStorage.getItem(USER);
+    if (!data) {
+      const profile = await getProfile();
+      await AsyncStorage.setItem(USER, JSON.stringify(profile));
+      return profile;
+    } else {
+      const profile: ResProfile = JSON.parse(data);
+      return profile;
+    }
   } catch (error) {
-    throw error;
+    console.log(error);
+  }
+};
+
+export const deleteProfilePicture = async () => {
+  try {
+    const { data } = await axiosInstance.delete<ResSuccess<ResProfile>>(
+      "/account"
+    );
+    toastSuccess(data.message);
+    return data.data;
+  } catch (error) {
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
   }
 };
 
 export interface FormChangePassword {
-  newPassword: string;
   oldPassword: string;
+  newPassword: string;
   confirmPassword: string;
 }
 
 export const initFormChangePassword: FormChangePassword = {
-  newPassword: "",
   oldPassword: "",
+  newPassword: "",
   confirmPassword: "",
 };
 
 export const changePassword = async (
-  form: FormChangePassword
-): Promise<Response> => {
-  try {
-    const { data } = await axiosInstance.put<Response>("/account/password", {
-      newPassword: form.newPassword,
-      oldPassword: form.oldPassword,
-    });
-    return data;
-  } catch (error) {
-    throw error;
+  form: FormChangePassword,
+  loading: boolean,
+  setLoading: (loading: boolean) => void
+) => {
+  if (loading) return;
+  if (!form.oldPassword || !form.newPassword || !form.confirmPassword) {
+    toastFill();
+    return;
   }
-};
-
-export interface FormChangePhone {
-  phone: string;
-  password: string;
-}
-
-export const initFormChangePhone: FormChangePhone = {
-  phone: "",
-  password: "",
-};
-
-export const changePhone = async (form: FormChangePhone): Promise<Response> => {
-  try {
-    const { data } = await axiosInstance.put<Response>("/account/phone", {
-      phone: form.phone,
-      password: form.password,
-    });
-    await AsyncStorage.setItem(PHONE, form.phone);
-    return data;
-  } catch (error) {
-    throw error;
+  if (form.newPassword !== form.confirmPassword) {
+    toastError("Password tidak sama");
+    return;
   }
-};
-
-export const changePicture = async (
-  image: ImagePicker.ImagePickerAsset
-): Promise<ProfileResponse> => {
+  toastLoading();
+  setLoading(true);
   try {
-    const formData = new FormData();
-    formData.append("image", {
-      uri: image.uri,
-      type: "image/jpeg",
-      name: "profile.jpg",
-    } as any);
-    const { data } = await axiosInstance.put<ProfileResponse>(
-      "/account/picture",
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
+    const { data } = await axiosInstance.put<ResSuccess<ResProfile>>(
+      "/account/change-password",
+      form
     );
-    await AsyncStorage.setItem(PICTURE, data.data.picture || "");
-    return data;
+    toastSuccess(data.message);
   } catch (error) {
-    throw error;
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
+  } finally {
+    setLoading(false);
   }
 };
 
-export const deletePicture = async (): Promise<Response> => {
+export const getHistories = async () => {
   try {
-    const { data } = await axiosInstance.delete<Response>("/account/picture");
-    await AsyncStorage.setItem(PICTURE, "");
-    return data;
+    const { data } = await axiosInstance.get<ResSuccess<ResHistory>>(
+      "/account/history"
+    );
+    return data.data;
   } catch (error) {
-    throw error;
-  }
-};
-
-export const getLinkForgotPass = async (email: string): Promise<Response> => {
-  try {
-    const { data } = await axiosInstance.post(`/account/reset-password`, {
-      email,
-    });
-    return data;
-  } catch (error) {
-    throw error;
+    console.log(error);
+    const err = error as ResFail;
+    toastError(err.response?.data.message);
   }
 };

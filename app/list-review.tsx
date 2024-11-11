@@ -57,64 +57,38 @@ const LIST_REVIEWS = [
     rating: 4,
     comment:
       "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
-    image: "https://via.placeholder.com/150",
     isDeletable: true,
   },
   {
-    name: "Rina",
+    name: "Aldo",
+    rating: 4.8,
+    comment:
+      "Kos yang nyaman dan bersih. Fasilitasnya lengkap dan pemiliknya sangat ramah.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/c/cb/Elon_Musk_Royal_Society_crop.jpg",
+  },
+  {
+    name: "Bekti",
     rating: 4,
     comment:
       "Tempat yang tenang untuk belajar dan istirahat. Harga sesuai dengan fasilitas.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Donald_Trump_official_portrait.jpg/1200px-Donald_Trump_official_portrait.jpg",
   },
   {
-    name: "Dika",
+    name: "Maharani",
     rating: 4,
     comment: "Kamar luas dan bersih, namun sinyal WiFi terkadang lambat.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Kamala_Harris_Vice_Presidential_Portrait.jpg/640px-Kamala_Harris_Vice_Presidential_Portrait.jpg",
   },
   {
-    name: "Maya",
+    name: "Martin",
     rating: 5,
     comment:
       "Sangat puas dengan kos ini! Lingkungan aman dan nyaman, serta dekat dengan kampus.",
-  },
-  {
-    name: "Yudi",
-    rating: 3,
-    comment: "Kos lumayan, namun fasilitas dapurnya perlu diperbarui.",
-  },
-  {
-    name: "Santi",
-    rating: 4,
-    comment:
-      "Kebersihan terjaga dengan baik dan terdapat parkir motor yang luas.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Rico",
-    rating: 4,
-    comment:
-      "Harga cukup terjangkau dengan fasilitas AC dan air panas di kamar mandi.",
-  },
-  {
-    name: "Wulan",
-    rating: 4,
-    comment:
-      "Pemilik kos ramah dan membantu. Kamar nyaman dengan kasur dan lemari yang bagus.",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Hendra",
-    rating: 4,
-    comment:
-      "Lokasi strategis dekat dengan minimarket, namun kadang berisik saat malam.",
-  },
-  {
-    name: "Tina",
-    rating: 4,
-    comment:
-      "Suka dengan suasananya yang tenang, tetapi kamar mandi perlu lebih sering dibersihkan.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/640px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg",
   },
 ];
 

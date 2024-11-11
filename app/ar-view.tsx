@@ -21,7 +21,7 @@ const PanoramaScreen = () => {
       <script>
         pannellum.viewer('panorama', {
           type: 'equirectangular',
-          panorama: 'https://res.cloudinary.com/dga0wmldp/image/upload/v1730912853/sigap-sipoles/attachment/x3mlqczpiod77m9s9er5.jpg',
+          panorama: 'https://res.cloudinary.com/dga0wmldp/image/upload/v1731071022/indekos/panorama/OYz1CtPK.jpg',
           autoLoad: true,
           autoRotate: -2,
           showControls: true,

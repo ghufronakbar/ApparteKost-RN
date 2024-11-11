@@ -54,7 +54,7 @@ const ListHistory = ({
         </View>
       </View>
       <ThemedText type="default" className="text-sm">
-        1h
+        {Math.floor(Math.random() * 10) + 1}j
       </ThemedText>
     </TouchableOpacity>
   );

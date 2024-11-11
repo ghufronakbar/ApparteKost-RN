@@ -17,6 +17,9 @@ export default function LayoutHome() {
           options={{
             tabBarLabel: "Beranda",
             headerShown: false,
+            tabBarLabelStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="home" color={color} size={size} />
             ),
@@ -27,6 +30,9 @@ export default function LayoutHome() {
           options={{
             tabBarLabel: "Riwayat",
             headerShown: false,
+            tabBarLabelStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="time" color={color} size={size} />
             ),
@@ -37,6 +43,9 @@ export default function LayoutHome() {
           options={{
             tabBarLabel: "Tersimpan",
             headerShown: false,
+            tabBarLabelStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="bookmark" color={color} size={size} />
             ),
@@ -47,6 +56,9 @@ export default function LayoutHome() {
           options={{
             tabBarLabel: "Pengaturan",
             headerShown: false,
+            tabBarLabelStyle: {
+              fontFamily: "Outfit-SemiBold",
+            },
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="settings" color={color} size={size} />
             ),

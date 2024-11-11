@@ -18,7 +18,7 @@ const ListReview = ({
   rating,
   comment,
   isFull = false,
-  isDeletable
+  isDeletable,
 }: Props) => {
   return (
     <View
@@ -57,7 +57,7 @@ const ListReview = ({
               numberOfLines={1}
               className="text-gray-500"
             >
-              1 day ago
+              {Math.floor(Math.random() * 10) + 1} hari lalu
             </ThemedText>
           </View>
         </View>
@@ -66,12 +66,14 @@ const ListReview = ({
             <Ionicons name="star" size={16} color="#fa9006" />
             <ThemedText type="defaultSemiBold">{rating.toFixed(1)}</ThemedText>
           </View>
-          {isFull && isDeletable && (
+          {false && (
             <Ionicons name="backspace-sharp" size={16} color="red" />
           )}
         </View>
       </View>
-      <ThemedText type="default">{comment}</ThemedText>
+      <ThemedText type="default" numberOfLines={isFull ? 0 : 2}>
+        {comment}
+      </ThemedText>
     </View>
   );
 };

@@ -22,7 +22,11 @@ const HistoryScreen = () => {
       <ScrollView>
         {/* Header Section */}
         <View className="flex px-4 space-y-2">
-          <ThemedText className="w-full mb-4 mt-8" type="title" numberOfLines={1}>
+          <ThemedText
+            className="w-full mb-4 mt-8"
+            type="title"
+            numberOfLines={1}
+          >
             Riwayat
           </ThemedText>
           {/* List of History */}
@@ -46,10 +50,11 @@ const HistoryScreen = () => {
 
 const LIST_HISTORY = [
   {
-    description: "Anda melakukan booking untuk Kos di Indehoy Kos",
+    description: "Anda melakukan booking untuk Kos di Damai Kos",
     date: new Date(),
     image:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://pennyu.co.id/wp-content/uploads/2023/04/Kost-mahasiswa-jpg.webp",
+
     district: "Denpasar",
     subdistrict: "Denpasar Barat",
   },
@@ -58,12 +63,17 @@ const LIST_HISTORY = [
     date: new Date(),
     district: "Sleman",
     subdistrict: "Mlati",
+    image:
+      "https://www.99.co/id/panduan/wp-content/uploads/2022/11/peraturan-kos-kosan-1000x630.jpg",
   },
   {
-    description: "Anda melakukan booking untuk Kos di Mami Kos Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, doloremque similique accusamus soluta optio voluptates libero qui voluptas at saepe?",
+    description:
+      "Anda melakukan booking untuk Kos di Mami Kos",
     date: new Date(),
     district: "Magelang",
     subdistrict: "Mertoyudan",
+    image:
+      "https://www.simplyhomy.com/wp-content/uploads/2018/08/bisnis-kos-kosan-570x300.jpg",
   },
 ];
 

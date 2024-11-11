@@ -1,7 +1,7 @@
-export const APP_NAME = "Indekos";
+export const APP_NAME = "ApparteKost";
 
 export const APP_TEXT = {
-  SLOGAN: "Stylish and modern. Simple. Efficient.",
+  SLOGAN: "Stylish and Modern, Simple, Efficient.",
   ABOUT_US: {
     TITLE: "Tentang Kami",
     CONTENTS: [

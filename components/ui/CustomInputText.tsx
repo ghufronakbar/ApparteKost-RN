@@ -1,4 +1,3 @@
-import { Inter } from "@/constants/Fonts";
 import { KeyboardTypeOptions, Text, TextInput, View } from "react-native";
 import { ThemedText } from "../ThemedText";
 
@@ -31,7 +30,6 @@ export const CustomInputText: React.FC<CustomInputTextProps> = ({
           multiline ? "h-40" : "h-12"
         } `}
         placeholder={placeholder}
-        style={Inter}
         value={value}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
@@ -39,6 +37,9 @@ export const CustomInputText: React.FC<CustomInputTextProps> = ({
         numberOfLines={numberOfLines}
         placeholderTextColor={"#a3a3a3"}
         secureTextEntry={secureTextEntry}
+        style={{
+          fontFamily: "Outfit-Regular",
+        }}
       />
     </View>
   );
