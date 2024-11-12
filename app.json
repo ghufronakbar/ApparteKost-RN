@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Indekos",
-    "slug": "indekos",
+    "name": "ApparteKost",
+    "slug": "apparte-kost",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,25 +29,26 @@
         "ACCESS_COARSE_LOCATION",
         "INTERNET"
       ],
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyADMtqm3wSxVeuEIpNRjKIuKO4taqYaB30"
-        }
-      },
-      "package": "com.lanstheprodigy.Indekos"
+      "package": "com.lanstheprodigy.ApparteKost"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
     "experiments": {
       "typedRoutes": false
     },
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "bcf3efa8-0579-4c52-abcf-8b1186c96049"
       }
     }
   }
