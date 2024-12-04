@@ -35,6 +35,7 @@ export interface ResBoardingDetail {
   booking: Booking | null;
   review: Review | null;
   bookings: Booking[];
+  availableRoom: number;
 }
 
 export const initResboardingDetail: ResBoardingDetail = {
@@ -72,6 +73,7 @@ export const initResboardingDetail: ResBoardingDetail = {
   booking: null,
   review: null,
   bookings: [],
+  availableRoom: 0,
 };
 
 export interface Booking {

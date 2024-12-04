@@ -12,10 +12,15 @@ import {
   ResKeyLocation,
 } from "@/models/ResBoarding";
 
-export const getAllBoardings = async () => {
+export const getAllBoardings = async (cache = false) => {
   try {
     const { data } = await axiosInstance.get<ResSuccess<ResBoarding>>(
-      "/boardings"
+      "/boardings",
+      {
+        params: {
+          cache,
+        },
+      }
     );
     return data.data;
   } catch (error) {
@@ -25,10 +30,15 @@ export const getAllBoardings = async () => {
   }
 };
 
-export const getBoardingDetail = async (id: string) => {
+export const getBoardingDetail = async (id: string, cache = false) => {
   try {
     const { data } = await axiosInstance.get<ResSuccess<ResBoardingDetail>>(
-      `/boardings/${id}`
+      `/boardings/${id}`,
+      {
+        params: {
+          cache,
+        },
+      }
     );
     return data.data;
   } catch (error) {
@@ -46,7 +56,6 @@ export const bookingBoarding = async (
 ) => {
   try {
     if (loading) return;
-    toastLoading();
     setLoading(true);
     const { data } = await axiosInstance.post<ResSuccess<ResBoardingDetail>>(
       `/boardings`,
@@ -72,8 +81,7 @@ export const bookmarkBoarding = async (
   afterSuccess?: () => void
 ) => {
   try {
-    if (loading) return;
-    toastLoading();
+    if (loading) return;    
     setLoading(true);
     const { data } = await axiosInstance.put<ResSuccess<ResBoardingDetail>>(
       `/boardings`,
@@ -82,7 +90,7 @@ export const bookmarkBoarding = async (
       }
     );
     afterSuccess?.();
-    toastSuccess(data.message);
+    // toastSuccess(data.message);
   } catch (error) {
     console.log(error);
     const err = error as ResFail;
@@ -95,13 +103,13 @@ export const bookmarkBoarding = async (
 export interface FormReviewBoarding {
   boardingHouseId: number;
   rating: number;
-  review: string | null;
+  comment: string | null;
 }
 
 export const initFormReviewBoarding: FormReviewBoarding = {
   boardingHouseId: 0,
   rating: 0,
-  review: null,
+  comment: null,
 };
 
 export const reviewBoarding = async (
@@ -112,6 +120,7 @@ export const reviewBoarding = async (
 ) => {
   try {
     if (loading) return;
+    console.log(JSON.stringify(form));
     if (form.rating === 0) {
       toastError("Rating harus diisi");
       return;
@@ -133,10 +142,15 @@ export const reviewBoarding = async (
   }
 };
 
-export const getKeyLocation = async () => {
+export const getKeyLocation = async (cache = false) => {
   try {
     const { data } = await axiosInstance.get<ResSuccess<ResKeyLocation>>(
-      "/boardings/key-location"
+      "/boardings/key-location",
+      {
+        params: {
+          cache,
+        },
+      }
     );
     return data.data;
   } catch (error) {

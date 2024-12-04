@@ -1,7 +1,9 @@
 import React from "react";
 import { WebView } from "react-native-webview";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { MaterialIcons } from "@expo/vector-icons";
+import { C } from "@/constants/Colors";
 
 const PanoramaScreen = () => {
   const { panoramaPicture } = useLocalSearchParams() as {
@@ -40,9 +42,31 @@ const PanoramaScreen = () => {
   `;
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        position: "relative",
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height,
+      }}
+    >
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1,
+        }}
+        pointerEvents="box-none"
+      >
+        <MaterialIcons name="360" size={46} color={C[1]} />
+      </View>
       <WebView
-        style={{ flex: 1 }}
+        style={{ flex: 1, zIndex: 0 }}
         originWhitelist={["*"]}
         source={{ html: HTMLContent }}
         javaScriptEnabled={true}
@@ -51,11 +75,4 @@ const PanoramaScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
 export default PanoramaScreen;

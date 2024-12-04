@@ -2,7 +2,8 @@ import { ThemedText } from "@/components/ThemedText";
 import ListHistory from "@/components/ui/ListHistory";
 import { ResHistory } from "@/models/ResAccount";
 import { getAllHistories } from "@/services/account";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,16 +11,18 @@ const HistoryScreen = () => {
   const [data, setData] = useState<ResHistory[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = async (cache = false) => {
     setLoading(true);
-    const res = await getAllHistories();
+    const res = await getAllHistories(cache);
     res && setData(res);
     res && setLoading(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   return (
     <SafeAreaView>
@@ -54,7 +57,7 @@ const HistoryScreen = () => {
             )}
             keyExtractor={(item) => item.type + item.boardingHouseId}
             refreshing={loading}
-            onRefresh={fetchData}
+            onRefresh={() => fetchData(true)}
           />
         </View>
       </View>

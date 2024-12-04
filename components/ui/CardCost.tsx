@@ -10,9 +10,18 @@ interface Props {
   name: string;
   image?: string | null;
   rating: number;
+  isBookmarked?: boolean;
+  onPressBookmark?: () => void;
 }
 
-const CardCost = ({ name, image, rating, id }: Props) => {
+const CardCost = ({
+  name,
+  image,
+  rating,
+  id,
+  isBookmarked,
+  onPressBookmark,
+}: Props) => {
   return (
     <TouchableOpacity
       style={{
@@ -43,6 +52,21 @@ const CardCost = ({ name, image, rating, id }: Props) => {
         source={image ? { uri: image } : DEFAULT_IMAGE}
         className="w-16 h-16 aspect-square object-cover rounded-full"
       />
+      {isBookmarked ? (
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+          }}
+          onPress={(e) => {
+            e.stopPropagation();
+            onPressBookmark?.();
+          }}
+        >
+          <Ionicons name="close" size={24} color="black" />
+        </TouchableOpacity>
+      ) : null}
       <ThemedText type="subtitle" numberOfLines={1}>
         {name}
       </ThemedText>

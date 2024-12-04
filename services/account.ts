@@ -246,10 +246,15 @@ export const changePassword = async (
   }
 };
 
-export const getAllHistories = async () => {
+export const getAllHistories = async (cache = false) => {
   try {
     const { data } = await axiosInstance.get<ResSuccess<ResHistory[]>>(
-      "/account/history"
+      "/account/history",
+      {
+        params: {
+          cache,
+        },
+      }
     );
     return data.data;
   } catch (error) {
