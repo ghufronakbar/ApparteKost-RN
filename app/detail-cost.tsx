@@ -61,11 +61,13 @@ const DetailCostScreen = () => {
 
   const messageClick = async () => {
     try {
+      const url = `whatsapp://send?phone=${data?.phone}`;
       if (data.boardingHouseId !== 0) {
-        const canOpen = await Linking.canOpenURL(data.urlWhatsapp);
+        const canOpen = await Linking.canOpenURL(url);
         if (canOpen) {
-          await Linking.openURL(`https://wa.me/${data?.phone}`);
+          await Linking.openURL(url);
         } else {
+          console.log("Tidak dapat membuka WhatsApp");
           Alert.alert("Tidak dapat membuka WhatsApp");
         }
       }
