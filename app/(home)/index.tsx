@@ -198,9 +198,11 @@ const HomeScreen = () => {
                         image={item?.pictures?.[0]?.picture}
                         rating={item?.averageRating}
                         key={item?.boardingHouseId}
+                        price={item?.price}
                       />
                     ))}
               </View>
+              <View className="w-full h-20 " />
             </View>
           </View>
         )}

@@ -26,41 +26,53 @@ const HistoryScreen = () => {
 
   return (
     <SafeAreaView>
-      {/* Header Section */}
-      <View className="flex px-4 space-y-2">
-        <ThemedText className="w-full mb-4 mt-8" type="title" numberOfLines={1}>
-          Riwayat
-        </ThemedText>
-        {/* List of History */}
-        <View className="w-full flex">
-          {data.length === 0 && (
-            <View className="w-full h-40 flex items-center justify-center">
-              <ThemedText type="default" className="text-gray-500 text-center">
-                Tidak ada riwayat
-              </ThemedText>
+      <FlatList
+        data={[{}]}
+        refreshing={loading}
+        onRefresh={() => fetchData(true)}
+        renderItem={() => (
+          <View className="flex px-4 space-y-2">
+            <ThemedText
+              className="w-full mb-4 mt-8"
+              type="title"
+              numberOfLines={1}
+            >
+              Riwayat
+            </ThemedText>
+            {/* List of History */}
+            <View className="w-full flex">
+              {data.length === 0 && (
+                <View className="w-full h-40 flex items-center justify-center">
+                  <ThemedText
+                    type="default"
+                    className="text-gray-500 text-center"
+                  >
+                    Tidak ada riwayat
+                  </ThemedText>
+                </View>
+              )}
+              <FlatList
+                data={data}
+                renderItem={({ item, index }) => (
+                  <View key={item.type + item.boardingHouseId}>
+                    <ListHistory
+                      message={item.message}
+                      time={item.timeRelative}
+                      image={item.picture}
+                      district={item.district}
+                      subdistrict={item.subdistrict}
+                    />
+                    {index === data.length - 1 && <View className="h-60" />}
+                  </View>
+                )}
+                keyExtractor={(item) => item.type + item.boardingHouseId}
+                refreshing={loading}
+                onRefresh={() => fetchData(true)}
+              />
             </View>
-          )}
-          <FlatList
-            data={data}
-            renderItem={({ item, index }) => (
-              <>
-                <ListHistory
-                  key={item.type + item.boardingHouseId}
-                  message={item.message}
-                  time={item.timeRelative}
-                  image={item.picture}
-                  district={item.district}
-                  subdistrict={item.subdistrict}
-                />
-                {index === data.length - 1 && <View className="h-60" />}
-              </>
-            )}
-            keyExtractor={(item) => item.type + item.boardingHouseId}
-            refreshing={loading}
-            onRefresh={() => fetchData(true)}
-          />
-        </View>
-      </View>
+          </View>
+        )}
+      />
     </SafeAreaView>
   );
 };

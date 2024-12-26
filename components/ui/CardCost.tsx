@@ -4,6 +4,7 @@ import { ThemedText } from "../ThemedText";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { router } from "expo-router";
+import formatRupiah from "@/utils/formatRupiah";
 
 interface Props {
   id: string;
@@ -12,6 +13,7 @@ interface Props {
   rating: number;
   isBookmarked?: boolean;
   onPressBookmark?: () => void;
+  price: number;
 }
 
 const CardCost = ({
@@ -21,6 +23,7 @@ const CardCost = ({
   id,
   isBookmarked,
   onPressBookmark,
+  price,
 }: Props) => {
   return (
     <TouchableOpacity
@@ -76,6 +79,13 @@ const CardCost = ({
           {rating.toFixed(1)}
         </ThemedText>
       </View>
+      <ThemedText
+        type="default"
+        className="font-medium text-sm"
+        numberOfLines={1}
+      >
+        {formatRupiah(price)} / bulan
+      </ThemedText>
     </TouchableOpacity>
   );
 };

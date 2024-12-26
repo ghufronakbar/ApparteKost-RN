@@ -17,7 +17,7 @@ export interface ResBoardingDetail {
   district: string;
   subdistrict: string;
   location: string;
-  panoramaPicture: string | null;
+  panoramas: Panorama[];
   maxCapacity: number;
   price: number;
   isPending: boolean;
@@ -50,7 +50,7 @@ export const initResboardingDetail: ResBoardingDetail = {
   district: "Loading...",
   subdistrict: "Loading...",
   location: "Loading...",
-  panoramaPicture: null,
+  panoramas: [],
   maxCapacity: 0,
   price: 0,
   isPending: false,
@@ -93,6 +93,11 @@ export interface Count {
 
 export interface Picture {
   picture: string;
+}
+
+export interface Panorama {
+  panoramaId: number;
+  panorama: string;
 }
 
 export interface Review {

@@ -17,6 +17,9 @@ import {
   Dimensions,
   Linking,
   ActivityIndicator,
+  Modal,
+  SafeAreaView,
+  Pressable,
 } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -27,7 +30,11 @@ import {
   initFormReviewBoarding,
   reviewBoarding,
 } from "@/services/boarding";
-import { initResboardingDetail, ResBoardingDetail } from "@/models/ResBoarding";
+import {
+  initResboardingDetail,
+  Panorama,
+  ResBoardingDetail,
+} from "@/models/ResBoarding";
 import formatRupiah from "@/utils/formatRupiah";
 import Toast from "react-native-toast-message";
 import ModalShowImages from "@/components/ui/ModalShowImages";
@@ -40,6 +47,8 @@ const DetailCostScreen = () => {
   const [loadingBook, setLoadingBook] = useState(false);
   const [fetching, setFetching] = useState(false);
   const { id } = useLocalSearchParams() as { id: string };
+
+  const [isPanoramaOpen, setIsPanoramaOpen] = useState(false);
 
   const [isImageOpen, setIsImageOpen] = useState(false);
 
@@ -98,13 +107,13 @@ const DetailCostScreen = () => {
       }
     }
   };
-  const arViewClick = () => {
+  const arViewClick = (panorama: string) => {
     if (data.boardingHouseId !== 0) {
-      if (data.panoramaPicture !== null) {
+      if (panorama) {
         router.push({
           pathname: "/ar-view",
           params: {
-            panoramaPicture: data.panoramaPicture,
+            panoramaPicture: panorama,
           },
         });
       } else {
@@ -181,7 +190,7 @@ const DetailCostScreen = () => {
   };
 
   return (
-    <>
+    <View className="flex-1">
       <View style={{ flex: 1, backgroundColor: "black" }}>
         {/* Gambar Background */}
         <View style={{ height: 300, position: "relative", zIndex: 1 }}>
@@ -274,7 +283,7 @@ const DetailCostScreen = () => {
                 }}
                 onPress={messageClick}
               >
-                <Ionicons name="chatbox-ellipses" size={24} color="white" />
+                <Ionicons name="logo-whatsapp" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -319,7 +328,7 @@ const DetailCostScreen = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                onPress={arViewClick}
+                onPress={() => setIsPanoramaOpen(true)}
               >
                 <MaterialIcons name="360" size={24} color="white" />
               </TouchableOpacity>
@@ -415,6 +424,7 @@ const DetailCostScreen = () => {
                       alignItems: "center",
                       gap: 16,
                     }}
+                    onPress={mapClick}
                   >
                     <View
                       style={{
@@ -428,7 +438,7 @@ const DetailCostScreen = () => {
                     >
                       <Ionicons name="location" size={24} color={C[1]} />
                     </View>
-                    <View>
+                    <View className="flex flex-col max-w-[80%]">
                       {data.boardingHouseId !== 0 && (
                         <ThemedText type="subtitle">
                           {data?.subdistrict}, {data?.district}
@@ -543,8 +553,88 @@ const DetailCostScreen = () => {
         visible={isImageOpen}
         images={data?.pictures.map((item) => item.picture) || []}
       />
+      <ModalPickPanorama
+        visible={isPanoramaOpen}
+        onClose={() => setIsPanoramaOpen(false)}
+        panoramas={data?.panoramas}
+        onItemClick={arViewClick}
+      />
       <Toast />
-    </>
+    </View>
+  );
+};
+
+interface ModalPickPanoramaProps {
+  visible: boolean;
+  onClose: () => void;
+  panoramas: Panorama[];
+  onItemClick?: (item: string) => void;
+}
+
+const ModalPickPanorama = ({
+  visible,
+  onClose,
+  panoramas,
+  onItemClick,
+}: ModalPickPanoramaProps) => {
+  if (panoramas.length === 0 || !visible) return null;
+  return (
+    <Pressable
+      style={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.5)",
+      }}
+      onPress={onClose}
+    >
+      <Pressable
+        style={{
+          backgroundColor: "white",
+          borderRadius: 8,
+          width: "80%",
+          maxHeight: "80%",
+          paddingHorizontal: 16,
+          paddingVertical: 24,
+          alignSelf: "center",
+        }}
+        onPress={(e) => e.stopPropagation()}
+      >
+        <View className="flex flex-row justify-between">
+          <ThemedText type="subtitle">Pilih Panorama</ThemedText>
+          <TouchableOpacity style={{}} onPress={onClose} className="self-end">
+            <Ionicons name="close" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={panoramas}
+          style={{ marginTop: 16 }}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              key={item.panoramaId}
+              onPress={() => onItemClick?.(item.panorama)}
+            >
+              <Image
+                source={{ uri: item.panorama }}
+                style={{
+                  width: "100%",
+                  height: 200,
+                  borderRadius: 8,
+                  marginBottom: 16,
+                  objectFit: "cover",
+                }}
+              />
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.panoramaId.toString()}
+          contentContainerStyle={{ paddingBottom: 16 }}
+        />
+      </Pressable>
+    </Pressable>
   );
 };
 

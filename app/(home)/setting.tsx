@@ -23,7 +23,7 @@ const SettingScreen = () => {
   );
 
   return (
-    <>
+    <View>
       <SafeAreaView>
         <ScrollView>
           <View className="flex px-4 space-y-4">
@@ -91,7 +91,7 @@ const SettingScreen = () => {
         </ScrollView>
       </SafeAreaView>
       <Toast />
-    </>
+    </View>
   );
 };
 

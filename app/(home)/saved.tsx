@@ -103,6 +103,7 @@ const SavedScreen = () => {
                     name={item.name}
                     image={item?.pictures[0]?.picture}
                     rating={item.averageRating}
+                    price={item.price}
                     isBookmarked
                     onPressBookmark={() =>
                       handleUnBookmark(item?.boardingHouseId?.toString())

@@ -1,7 +1,7 @@
 import React from "react";
 import { WebView } from "react-native-webview";
-import { Dimensions, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { Dimensions, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { C } from "@/constants/Colors";
 
@@ -42,7 +42,7 @@ const PanoramaScreen = () => {
   `;
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         position: "relative",
@@ -65,6 +65,22 @@ const PanoramaScreen = () => {
       >
         <MaterialIcons name="360" size={46} color={C[1]} />
       </View>
+      <View
+        style={{
+          position: "absolute",
+          top: 60,
+          left: 20,
+          zIndex: 5,
+        }}
+        pointerEvents="box-none"
+      >
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="w-fit h-fit p-2 rounded-lg bg-white flex justify-center items-center"
+        >
+          <MaterialIcons name="arrow-back" size={24} color={C[1]} />
+        </TouchableOpacity>
+      </View>
       <WebView
         style={{ flex: 1, zIndex: 0 }}
         originWhitelist={["*"]}
@@ -72,7 +88,7 @@ const PanoramaScreen = () => {
         javaScriptEnabled={true}
         domStorageEnabled={true}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 export default PanoramaScreen;
