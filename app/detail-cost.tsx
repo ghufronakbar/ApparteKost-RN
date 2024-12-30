@@ -71,16 +71,17 @@ const DetailCostScreen = () => {
   const messageClick = async () => {
     try {
       const url = `whatsapp://send?phone=${data?.phone}`;
-      const canOpen = await Linking.canOpenURL(url);
-      if (data.boardingHouseId !== 0) {
-        const canOpen = await Linking.canOpenURL(url);
-        if (canOpen) {
-          await Linking.openURL(url);
-        } else {
-          console.log("Tidak dapat membuka WhatsApp");
-          Alert.alert("Tidak dapat membuka WhatsApp");
-        }
-      }
+      await Linking.openURL(url);
+      // const canOpen = await Linking.canOpenURL(url);
+      // if (data.boardingHouseId !== 0) {
+      //   const canOpen = await Linking.canOpenURL(url);
+      //   if (canOpen) {
+      //     await Linking.openURL(url);
+      //   } else {
+      //     console.log("Tidak dapat membuka WhatsApp");
+      //     Alert.alert("Tidak dapat membuka WhatsApp");
+      //   }
+      // }
     } catch (error) {
       console.error("Failed to open URL", error);
       Alert.alert("Error", "Terjadi kesalahan saat mencoba membuka WhatsApp.");
