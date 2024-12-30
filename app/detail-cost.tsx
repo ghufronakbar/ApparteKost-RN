@@ -71,6 +71,7 @@ const DetailCostScreen = () => {
   const messageClick = async () => {
     try {
       const url = `whatsapp://send?phone=${data?.phone}`;
+      const canOpen = await Linking.canOpenURL(url);
       if (data.boardingHouseId !== 0) {
         const canOpen = await Linking.canOpenURL(url);
         if (canOpen) {
@@ -98,6 +99,7 @@ const DetailCostScreen = () => {
     }
   };
   const mapClick = async () => {
+    await Linking.openURL(data?.urlGoogleMap);
     if (data.boardingHouseId !== 0) {
       const canOpen = await Linking.canOpenURL(data?.urlGoogleMap);
       if (canOpen) {
