@@ -29,7 +29,7 @@ const RegisterScreen = () => {
             </ThemedText>
             <ThemedText type="subtitle">
               Ayo Cari Kos bersama
-              <ThemedText className="text-custom-1 font-black" type="subtitle">
+              <ThemedText className="text-custom-1" type="subtitle">
                 {" "}
                 {APP_NAME}!
               </ThemedText>

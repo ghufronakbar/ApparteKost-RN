@@ -24,7 +24,7 @@ const IndexScreen = () => {
           {
             fontSize: 40,
             color: "white",
-            fontWeight: "bold",
+            fontFamily: "Outfit-Bold",
           },
         ]}
       >

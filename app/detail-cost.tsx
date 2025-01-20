@@ -384,7 +384,7 @@ const DetailCostScreen = () => {
                       <ThemedText type="sectionTitle">Ulasan</ThemedText>
                       <Ionicons name="star" size={24} color="#fa9006" />
                       <ThemedText type="defaultSemiBold">
-                        {data?.averageRating}
+                        {data?.averageRating.toFixed(1)}
                       </ThemedText>
                       <ThemedText type="link">
                         ({data?._count.reviews})

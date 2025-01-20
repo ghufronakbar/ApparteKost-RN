@@ -36,7 +36,7 @@ const ListReviewScreen = () => {
             <View className="flex flex-row space-x-2 items-center">
               <ThemedText type="sectionTitle">Ulasan</ThemedText>
               <Ionicons name="star" size={24} color="#fa9006" />
-              <ThemedText type="defaultSemiBold">{rating}</ThemedText>
+              <ThemedText type="defaultSemiBold">{parseFloat(rating).toFixed(1)}</ThemedText>
             </View>
             <ThemedText type="link">{totalReview} Ulasan</ThemedText>
           </View>

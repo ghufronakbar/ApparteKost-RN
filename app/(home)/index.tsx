@@ -179,7 +179,7 @@ const HomeScreen = () => {
             <View className="w-full flex space-y-2">
               <View className="flex flex-row justify-between items-center">
                 <ThemedText type="sectionTitle">Terpopuler</ThemedText>
-                {data && data?.all?.length > 6 ? (
+                {data && data?.all?.length > 5 ? (
                   <TouchableOpacity onPress={() => router.push("/list-cost")}>
                     <ThemedText type="default" className="text-custom-1">
                       Lihat Selengkapnya
@@ -190,7 +190,7 @@ const HomeScreen = () => {
               <View className="w-full flex flex-row flex-wrap justify-between">
                 {data &&
                   data?.all
-                    .slice(0, 6)
+                    .slice(0, 5)
                     .map((item) => (
                       <CardCost
                         id={item?.boardingHouseId?.toString()}
